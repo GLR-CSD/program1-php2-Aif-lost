@@ -41,8 +41,7 @@
     <h1>Albums</h1>
     <?php
     // Verbind met de database
-    $db = new PDO('/Users/100916/PhpstormProjects/program1-php2-Aif-lost/persoon.sqlite');
-
+    require_once 'db.php';
     // Haal alle albums op
     try {
         $albums = Album::getAll($db);
