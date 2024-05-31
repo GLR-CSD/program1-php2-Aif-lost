@@ -2,58 +2,64 @@
 
 class Album
 {
-    /** @var int|null Het ID van de persoon */
     private ?int $ID;
-
-    /** @var string De voornaam van de persoon */
     private string $Naam;
-
-    /** @var string|null Het telefoonnummer van de persoon */
     private ?string $Artiesten;
-
-    /** @var string|null Het e-mailadres van de persoon */
     private ?string $Release_Datum;
-
-    /** @var string|null Eventuele opmerkingen over de persoon */
     private ?string $URL;
-
-    /** @var string|null Eventuele opmerkingen over de persoon */
     private ?string $Afbeelding;
-
-    /** @var string|null Eventuele opmerkingen over de persoon */
     private ?string $Prijs;
 
-    /**
-     * @return int|null
-     */
+    public function __construct(?int $ID, string $Naam, ?string $Artiesten, ?string $Release_Datum, ?string $URL, ?string $Afbeelding, ?string $Prijs)
+    {
+        $this->ID = $ID;
+        $this->Naam = $Naam;
+        $this->Artiesten = $Artiesten;
+        $this->Release_Datum = $Release_Datum;
+        $this->URL = $URL;
+        $this->Afbeelding = $Afbeelding;
+        $this->Prijs = $Prijs;
+    }
+
     public function getID(): ?int
     {
         return $this->ID;
     }
 
-    /**
-     * @param int|null $ID
-     */
-    public function setID(?int $ID): void
+    public function getNaam(): string
     {
-        $this->ID = $ID;
+        return $this->Naam;
     }
 
-    /**
-     * Haalt alle personen op uit de database.
-     *
-     * @param PDO $db De PDO-databaseverbinding.
-     * @return Persoon[] Een array van Persoon-objecten.
-     */
+    public function getArtiesten(): ?string
+    {
+        return $this->Artiesten;
+    }
+
+    public function getReleaseDatum(): ?string
+    {
+        return $this->Release_Datum;
+    }
+
+    public function getURL(): ?string
+    {
+        return $this->URL;
+    }
+
+    public function getAfbeelding(): ?string
+    {
+        return $this->Afbeelding;
+    }
+
+    public function getPrijs(): ?string
+    {
+        return $this->Prijs;
+    }
+
     public static function getAll(PDO $db): array
     {
-        // Voorbereiden van de query
         $stmt = $db->query("SELECT * FROM album");
-
-        // Array om personen op te slaan
         $albums = [];
-
-        // Itereren over de resultaten en personen toevoegen aan de array
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $album = new Album(
                 $row['ID'],
@@ -66,9 +72,6 @@ class Album
             );
             $albums[] = $album;
         }
-
-        // Retourneer array met personen
         return $albums;
     }
-
 }
