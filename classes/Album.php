@@ -38,4 +38,37 @@ class Album
     {
         $this->ID = $ID;
     }
+
+    /**
+     * Haalt alle personen op uit de database.
+     *
+     * @param PDO $db De PDO-databaseverbinding.
+     * @return Persoon[] Een array van Persoon-objecten.
+     */
+    public static function getAll(PDO $db): array
+    {
+        // Voorbereiden van de query
+        $stmt = $db->query("SELECT * FROM album");
+
+        // Array om personen op te slaan
+        $albums = [];
+
+        // Itereren over de resultaten en personen toevoegen aan de array
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $album = new Album(
+                $row['ID'],
+                $row['Naam'],
+                $row['Artiesten'],
+                $row['Release_datum'],
+                $row['URL'],
+                $row['Afbeelding'],
+                $row['Prijs']
+            );
+            $albums[] = $album;
+        }
+
+        // Retourneer array met personen
+        return $albums;
+    }
+
 }
